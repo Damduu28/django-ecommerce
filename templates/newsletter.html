@@ -1,0 +1,39 @@
+<div id="newsLetter">
+  <div class="container">
+    <p>Sign Up for the <strong>NEWSLETTER</strong></p>
+    <form action="{% url 'news-letter' %}" method="POST" >
+      {% csrf_token %}
+      <input
+        class="field__group"
+        type="email"
+        name="email"
+        placeholder="Enter Your Email"
+      />
+      <button class="newsletter_btn">
+        <i class="fa fa-envelope"></i> Subscribe
+      </button>
+    </form>
+    <ul class="newsletter__follw">
+      <li>
+        <a href="#">
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fa-brands fa-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <i class="fa-brands fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

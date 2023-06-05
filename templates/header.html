@@ -1,0 +1,132 @@
+{% load static %}
+
+<header>
+  <div class="top__header">
+    <div class="container">
+      <ul class="left__top__links">
+        <li>
+          <a href="#"><i class="fas fa-phone"></i> +233-551-163-182</a>
+        </li>
+        <li>
+          <a href="#"> <i class="fas fa-envelope"></i> ecomm@email.com </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fas fa-map-marker"></i> Tamale-Daboya Road
+          </a>
+        </li>
+      </ul>
+      <ul class="right__top__links">
+        <li>
+          <a href="#"> <i class="fas fa-dollar"></i>USD </a>
+        </li>
+        <li>
+          <a href="#"> <i class="fas fa-user"></i> My Account </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+   <div class="bottom__header">
+      <div class="container">
+        <div class="header__logo">
+          <a href="#">
+            <img src="{% static 'media/logo.png' %}" alt="" />
+          </a>
+        </div>
+
+        <div class="form__search">
+          <form action="">
+            {% comment %} {% csrf_token %} {% endcomment %}
+            <select name="category" id="">
+              <option value="0">All Categories</option>
+              {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+               {% endfor %}
+            </select>
+            <input
+              type="search"
+              class="input"
+              name="q"
+              id=""
+              placeholder="Search here.."
+            />
+            <button class="search__btn">Search</button>
+          </form>
+        </div>
+
+        <div class="header__cart__whist">
+          <div class="header_wishlish">
+            <a href="#">
+              <i class="far fa-heart"></i>
+              <span>You Wishlist</span>
+              <div class="wc__count">2</div>
+            </a>
+          </div>
+
+          <div class="dropdown" data-dropdown>
+            <a href="#" data-dropdown-btn>
+              <i class="fa fa-shopping-cart" data-dropdown-btn></i>
+              <span data-dropdown-btn>Your Cart</span>
+              <div class="wc__count">{{ orderItem_count }}</div>
+            </a>
+            <div class="dropdown__content">
+              <div class="cart__list">
+                {% for item in orderItems %}
+                <div class="cart__single">
+                    <div class="product__cart__img">
+                      <img src="{{ item.item.get_item_image_url }}" alt="" />
+                    </div>
+                    <div class="cart__detail">
+                      <h3 class="pro__cart__name">
+                        <a href="#">{{ item.item.title }}</a>
+                      </h3>
+                      <h4 class="pro__cart__price">
+                        <span class="total__cart__count">{{item.quantity}}x</span>${{item.item.price}}
+                      </h4>
+                    </div>
+                    <button class="remove__cart">
+                      <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="cart__summary">
+                <small>{{order.get_quantity_total }} Item(s) selected</small>
+                <h5>SUBTOTAL: ${{ order.get_cart_total|floatformat:"2" }}</h5>
+              </div>
+              <div class="cart__btns">
+                <a href="{% url 'cart' %}" class="view__cart">
+                  View Cart
+                </a>
+                <a href="{% url 'checkout' %}" class="checkout">
+                  Checkout <i class="fas fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="toggle__bars">
+            <a href="#">
+              <i class="fas fa-bars"></i>
+              <span>Menu</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav>
+    <div class="container">
+      <ul class="nav__items">
+        <li class="active">
+          <a href="{% url 'home' %}">Home</a>
+        </li>
+        <li>
+          <a href="{% url 'store' %}">Store</a>
+        </li>
+        <li>
+          <a href="#">Hot Deals</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

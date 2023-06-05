@@ -1,0 +1,245 @@
+{% extends 'index.html' %} 
+{% block title %}Store{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="store__wrapper">
+  <ul class="messages">
+    <li></li>
+  </ul>
+  <div class="container">
+    <div class="store__left">
+      <div class="category__filter">
+        <h3>Categories</h3>
+        <form class="checkbox__filter category__form">
+          <input type="hidden" name="type" value="">
+          {% for category in categories %}
+          <div class="input__checkbox ">
+            {% comment %} {% csrf_token %} {% endcomment %}
+            <input type="checkbox" id="category-{{forloop.counter}}" data-name="{{ category.name }}" data-active="{{ category.active }}" />
+            <label for="category-{{forloop.counter}}">
+              <span></span>
+              {{ category.name }}
+              <small>({{ category.item_set.count }})</small>
+            </label>
+          </div>
+          {% endfor %}
+          
+        </form>
+      </div>
+      <div class="price__filter">
+        <h3>By Price</h3>
+        <div class="checkbox__filter">
+          <div class="input__checkbox">
+            <input type="checkbox" id="price-1" />
+            <label for="price-1">
+              <span></span>
+              All Price
+              <small>100</small>
+            </label>
+          </div>
+          <div class="input__checkbox">
+            <input type="checkbox" id="price-2" />
+            <label for="price-2">
+              <span></span>
+              $100 - $200
+              <small>(123)</small>
+            </label>
+          </div>
+          <div class="input__checkbox">
+            <input type="checkbox" id="price-3" />
+            <label for="price-3">
+              <span></span>
+              $200 - $300
+              <small>(342)</small>
+            </label>
+          </div>
+          <div class="input__checkbox">
+            <input type="checkbox" id="price-4" />
+            <label for="price-4">
+              <span></span>
+              $300 - $400
+              <small>(325)</small>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="brands__filter">
+        <h3>Brands</h3>
+        <div class="checkbox__filter">
+          <div class="input__checkbox">
+            <input type="checkbox" id="brand-1" />
+            <label for="brand-1">
+              <span></span>
+              Samsung
+              <small>(578)</small>
+            </label>
+          </div>
+          <div class="input__checkbox">
+            <input type="checkbox" id="brand-2" />
+            <label for="brand-2">
+              <span></span>
+              Lg
+              <small>(125)</small>
+            </label>
+          </div>
+          <div class="input__checkbox">
+            <input type="checkbox" id="brand-3" />
+            <label for="brand-3">
+              <span></span>
+              Sony
+              <small>(755)</small>
+            </label>
+          </div>
+          <div class="input__checkbox">
+            <input type="checkbox" id="brand-4" />
+            <label for="brand-4">
+              <span></span>
+              Iphone
+              <small>(578)</small>
+            </label>
+          </div>
+        </div>
+      </div>
+      <ul class="store__top__selling">
+        <h3>Top Selling</h3>
+        <li>
+          <div class="store__product">
+            <div class="store__img">
+              <img src="{product01}" alt="" />
+            </div>
+            <div class="store__product__detaile">
+              <p class="store__cate">Category</p>
+              <h3 class="pro__name">Product name goes here</h3>
+              <h4 class="product__price">
+                $980.00 <del class="price__old">$990.00</del>
+              </h4>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="store__product">
+            <div class="store__img">
+              <img src="{product01}" alt="" />
+            </div>
+            <div class="store__product__detaile">
+              <p class="store__cate">Category</p>
+              <h3 class="pro__name">Product name goes here</h3>
+              <h4 class="product__price">
+                $980.00 <del class="price__old">$990.00</del>
+              </h4>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="store__product">
+            <div class="store__img">
+              <img src="{product01}" alt="" />
+            </div>
+            <div class="store__product__detaile">
+              <p class="store__cate">Category</p>
+              <h3 class="pro__name">Product name goes here</h3>
+              <h4 class="product__price">
+                $980.00 <del class="price__old">$990.00</del>
+              </h4>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="store__product">
+            <div class="store__img">
+              <img src="{product01}" alt="" />
+            </div>
+            <div class="store__product__detaile">
+              <p class="store__cate">Category</p>
+              <h3 class="pro__name">Product name goes here</h3>
+              <h4 class="product__price">
+                $980.00 <del class="price__old">$990.00</del>
+              </h4>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="store__right">
+      <div class="filter__view">
+        <div class="product__options">
+          <label>
+            Sort by:
+            <select class="input__select">
+              <option value="popular">Popular</option>
+              <option value="position">Position</option>
+            </select>
+          </label>
+          <label>
+            Show
+            <select class="input__select">
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </label>
+        </div>
+        <div class="store__view__btn">
+          <a href="#" class="grid__view active">
+            <i class="fa-solid fa-list"></i>
+          </a>
+          <a href="#" class="list__view">
+            <i class="fa-solid fa-list"></i>
+          </a>
+        </div>
+      </div>
+      <div class="store__products">
+        {% for item in items %}
+        <div class="product">
+            <div class="product__image">
+              <img src="{{ item.image.url }}" alt="" />
+              <div class="product__label">
+                {% if item.discount_percent %}
+                  <span class="discount__sale">-{{ item.discount_percent }}%</span>
+                {% endif %}
+                <span class="status__new">New</span>
+              </div>
+            </div>
+            <div class="product__detail">
+              <h3 class="product__name">
+                <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+              </h3>
+              <p class="product__category">{{ item.category }}</p>
+              <div class="star__price">
+                <div class="product__rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+                <h4 class="product__price">
+                  ${{ item.price }} <del class="price__old">$990.00</del>
+                </h4>
+              </div>
+              <div class="product__btns">
+                <button class="add_to_wishlist">
+                  <i class="far fa-heart"></i>
+                  <span class="tooltip">add to wishlist</span>
+                </button>
+                <button class="add_to_compare">
+                  <i class="fa fa-exchange"></i>
+                  <span class="tooltip">add to compare</span>
+                </button>
+                <button class="quick_view">
+                  <i class="fa fa-eye"></i>
+                  <span class="tooltip">quick view</span>
+                </button>
+              </div>
+              <div  class="add__to__cart">
+                <button data-type="add" data-item="{{ item.id }}" data-action="add" class="add__to__cart__btn update-item">
+                  <i class="fa fa-shopping-cart"></i> add to cart
+                </button>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,129 @@
+{% extends 'index.html' %} {% block title %}Cart{% endblock title %} {% load
+static %} {% block content %}
+<div class="cart__wrapper">
+  {% if messages %}
+      <ul class="cart__message">
+        {% for message in messages %}
+          <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+  {% endif %}
+  <div class="container">
+    <h3>Shopping Cart</h3>
+    <div class="table__coupon">
+      <div class="table__wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if orderItem_count > 0 %}
+            {% for orderItem in orderItems %}
+            <tr>
+              <td>
+                <div class="cart__product">
+                  <div class="cart__image">
+                    <img src="{{orderItem.item.get_item_image_url}}" alt="" />
+                  </div>
+                  <h4 class="cart__product__name">{{ orderItem.item.title }}</h4>
+                </div>
+              </td>
+              <td>
+                <span class="cart__price">${{ orderItem.item.price }}</span>
+              </td>
+              <td>
+                <div class="quantity__label cart__quantity">
+                  <div class="input__number">
+                    {% comment %} <input type="number" /> {% endcomment %}
+                    <span class="number">{{ orderItem.quantity }}</span>
+                    <div class="qty__add__remove">
+                      <span data-item="{{ orderItem.item.id }}" data-action="add" class="qty__add update-item">+</span>
+                      <span data-item="{{ orderItem.item.id }}" data-action="remove" class="qty__remove update-item">-</span>
+                    </div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="cart__total">${{ orderItem.get_total }}</span>
+              </td>
+              <td>
+                <button data-item="{{ orderItem.item.id }}" data-action="delete" class="del__btn fas fa-times update-item">
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td colspan="5">
+                <p>You currently have no items in your cart click down :- <strong class="ch_sp"><em>continue shopping</em></strong> to get a free discount</p>
+              </td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+        <div class="checkout__shopping">
+          <a href="{% url 'store' %}" class="continue__shopping">
+            <i class="fas fa-arrow-circle-left"></i>
+            continue shopping</a
+          >
+          <a href="{% url 'checkout' %}" class="proceed__checkout">
+            procced to checkout
+            <i class="fas fa-arrow-circle-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="coupon__form">
+        <h4>Have coupon?</h4>
+        <form action="{% url 'apply-coupon' %}" method="POST">
+          {% csrf_token %}
+          <div class="field__group">
+            {{ couponform.code }}
+            <button type="submit">Apply</button>
+          </div>
+          <div class="totals__wrapper">
+            {% if coupon %}
+            <div class="coupon_text">
+              <span class="coupon">{{ coupon.code }}</span>
+              {% if coupon.active == True %} {% endif %} coupon (<small
+                >{{ coupon.discount }}%</small
+              >
+              off)
+            </div>
+            {% endif %}
+            <ul class="money__wrapper">
+              <li>
+                <span class="total__price">Total price:</span>
+                <span class="amount">
+                  ${{ order.get_cart_total|floatformat:"2" }}
+                </span>
+              </li>
+              <li>
+                <span class="discount">Discount:</span>
+                <span style="color: red" class="amount">
+                  -${{ order.get_coupon_discount|floatformat:"2" }}
+                </span>
+              </li>
+              <li>
+                <span class="totals">Items:</span>
+                <span class="amount__total">{{ order.get_quantity_total }}</span>
+              </li>
+              <li>
+                <span class="totals">Total:</span>
+                <span class="amount__total"
+                  >${{order.get_finally_total|floatformat:"2"}}</span
+                >
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

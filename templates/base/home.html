@@ -1,0 +1,87 @@
+{% extends 'index.html' %} 
+{% block title %}Home{% endblock title %} 
+{% load static %} 
+{% block content %} 
+<ul class="messages">
+    <li></li>
+</ul>
+{% include 'shopCategories.html' %}
+<div id="products">
+  <div class="container">
+    <div class="products__tabs">
+      <h3>New Products</h3>
+      <ul class="tabs categories">
+        <li data-category="All">
+          <a href="{% url 'home' %}">All</a>
+        </li>
+        {% for category in categories %}
+        <li data-category="{{ category.name }}">
+          <a href="/?q={{ category.name  }}">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="products__tab__content">
+      <div class="content__wrap">
+        <div class="tab__content">
+          {% for item in items %}
+          <div class="product">
+            <div class="product__image">
+              <img src="{{ item.image.url }}" alt="" />
+              <div class="product__label">
+                {% if item.discount_percent %}
+                  <span class="discount__sale">-{{ item.discount_percent }}%</span>
+                {% endif %}
+                <span class="status__new">New</span>
+              </div>
+            </div>
+            <div class="product__detail">
+              <h3 class="product__name">
+                <a href="{{ item.get_absolute_url }}">{{ item.title }}</a>
+              </h3>
+              <p class="product__category">{{ item.category }}</p>
+              <div class="star__price">
+                <div class="product__rating">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                </div>
+                <h4 class="product__price">
+                  ${{ item.price }} <del class="price__old">$990.00</del>
+                </h4>
+              </div>
+              <div class="product__btns">
+                <button class="add_to_wishlist">
+                  <i class="far fa-heart"></i>
+                  <span class="tooltip">add to wishlist</span>
+                </button>
+                <button class="add_to_compare">
+                  <i class="fa fa-exchange"></i>
+                  <span class="tooltip">add to compare</span>
+                </button>
+                <button class="quick_view">
+                  <i class="fa fa-eye"></i>
+                  <span class="tooltip">quick view</span>
+                </button>
+              </div>
+              <div class="add__to__cart">
+                <button
+                  data-type="add"
+                  data-item="{{ item.id }}"
+                  data-action="add"
+                  class="add__to__cart__btn update-item"
+                >
+                  <i class="fa fa-shopping-cart"></i> add to cart
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'hotdeal.html' %} {% endblock %}

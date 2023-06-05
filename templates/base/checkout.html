@@ -1,0 +1,228 @@
+{% extends 'index.html' %} {% block title %}Checkout{% endblock title %} {% load
+static %} {% block content %}
+<div class="checkout__wrapper">
+  <div class="container">
+    <div class="billing__shipping__form">
+      <div class="billing__details">
+        <h3 class="check__title">Billing address</h3>
+        <div class="form__group">
+          <input class="input" type="text" name="name" placeholder="Name" />
+        </div>
+        <div class="form__group">
+          <input class="input" type="email" name="email" placeholder="Email" />
+        </div>
+        <div class="form__group">
+          <input
+            class="input"
+            type="text"
+            name="address"
+            placeholder="Address"
+          />
+        </div>
+        <div class="form__group">
+          <input class="input" type="text" name="city" placeholder="City" />
+        </div>
+        <div class="form__group">
+          <input
+            class="input"
+            type="text"
+            name="country"
+            placeholder="Country"
+          />
+        </div>
+        <div class="form__group">
+          <input
+            class="input"
+            type="text"
+            name="zipcode"
+            placeholder="ZIP Code"
+          />
+        </div>
+        <div class="form__group">
+          <input
+            class="input"
+            type="tel"
+            name="telephone"
+            placeholder="Telephone"
+          />
+        </div>
+        <div class="form__group">
+          <div class="input__checkbox ch__text">
+            <input type="checkbox" id="create-account" />
+            <label for="create-account">
+              <span></span>
+              Create Account?
+            </label>
+            <div class="caption">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                eiusmod tempor incididunt.
+              </p>
+              <input
+                class="input"
+                type="password"
+                name="password"
+                placeholder="Enter Your Password"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="shiping__details">
+        <h3 class="check__title">Shiping address</h3>
+
+        <div class="input__checkbox ch__text">
+          <input type="checkbox" id="shiping__address" />
+          <label for="shiping__address">
+            <span></span>
+            Ship to a diffrent address?
+          </label>
+          <div class="caption">
+            <div class="form__group">
+              <input class="input" type="text" name="name" placeholder="Name" />
+            </div>
+            <div class="form__group">
+              <input
+                class="input"
+                type="email"
+                name="email"
+                placeholder="Email"
+              />
+            </div>
+            <div class="form__group">
+              <input
+                class="input"
+                type="text"
+                name="address"
+                placeholder="Address"
+              />
+            </div>
+            <div class="form__group">
+              <input class="input" type="text" name="city" placeholder="City" />
+            </div>
+            <div class="form__group">
+              <input
+                class="input"
+                type="text"
+                name="country"
+                placeholder="Country"
+              />
+            </div>
+            <div class="form__group">
+              <input
+                class="input"
+                type="text"
+                name="zipcode"
+                placeholder="Zip Code"
+              />
+            </div>
+            <div class="form__group">
+              <input
+                class="input"
+                type="tel"
+                name="telephone"
+                placeholder="Telephone"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="order__notes">
+        <textarea class="input" placeholder="Order Notes"></textarea>
+      </div>
+    </div>
+    <div class="order__details">
+      <h3 class="check__title">Your Order</h3>
+      <div class="order__summary">
+        <div class="order__col">
+          <div>
+            <strong>PRODUCT</strong>
+          </div>
+          <div>
+            <strong>TOTAL</strong>
+          </div>
+        </div>
+        <div class="order__products">
+          {% for orderItem in orderItems %}
+          <div class="order__col">
+            <div>{{ orderItem.quantity }}x {{ orderItem.item.title }}</div>
+            <div>${{ orderItem.get_final_total }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="order__col">
+          <div>Coupon Discount</div>
+          <div>
+            <strong>{{ order.get_coupon_discount|floatformat:"2" }}</strong>
+          </div>
+        </div>
+        <div class="order__col">
+          <div>Shiping</div>
+          <div>
+            <strong>FREE</strong>
+          </div>
+        </div>
+        <div class="order__col">
+          <div>
+            <strong>TOTAL</strong>
+          </div>
+          <div>
+            <strong class="order__total"
+              >${{ order.get_finally_total|floatformat:"2" }}</strong
+            >
+          </div>
+        </div>
+      </div>
+      <div class="payment__method">
+        <div class="input__radio">
+          <input type="radio" name="payment" id="payment-1" />
+          <label for="payment-1">
+            <span></span>
+            Direct Bank Transfer
+          </label>
+          <div class="caption">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+        <div class="input__radio">
+          <input type="radio" name="payment" id="payment-2" />
+          <label for="payment-2">
+            <span></span>
+            Cheque Payment
+          </label>
+          <div class="caption">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+        <div class="input__radio">
+          <input type="radio" name="payment" id="payment-3" />
+          <label for="payment-3">
+            <span></span>
+            Paypal System
+          </label>
+          <div class="caption">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="input__checkbox ch__terms">
+        <input type="checkbox" id="terms" />
+        <label for="terms">
+          <span></span>
+          I've read and accept the <a href="#">terms & conditions</a>
+        </label>
+      </div>
+      <a href="#" class="primary__btn order__submit"> Place order </a>
+    </div>
+  </div>
+</div>
+{% endblock content %}
